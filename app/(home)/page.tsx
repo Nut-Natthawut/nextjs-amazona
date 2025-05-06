@@ -1,3 +1,4 @@
+import BrowsingHistoryList from '@/components/shared/browsing-history-list'
 import { HomeCard } from '@/components/shared/home/home-card'
 import { HomeCarousel } from '@/components/shared/home/home-carousel'
 import ProductSlider from '@/components/shared/product/product-slider'
@@ -85,6 +86,10 @@ const bestSellingProducts = await getProductsByTag({ tag: 'best-seller'})
           </CardContent>
         </Card>
       </div>
+      <div className='p-4 bg-background'>
+        <BrowsingHistoryList />
+      </div>
+
     </>
   )
 }
