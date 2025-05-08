@@ -3,6 +3,10 @@ export const APP_SLOGAN =
     process.env.NEXT_PUBLIC_APP_SLOGAN || "Spend less, live more.";
 export const APP_DESCRIPTION =
     process.env.NEXT_PUBLIC_APP_DESCRIPTION || "An Amazon  built with Next.js, MongoDB, Shadcn";
+export const APP_COPYRIGHT =
+    process.env.NEXT_PUBLIC_APP_COPYRIGHT ||
+    `Copyright © 2025 ${APP_NAME}. All rights reserved.`
+
 
 export const PAGE_SIZE = Number(process.env.PAGE_SIZE || 9)
 
