@@ -10,6 +10,8 @@ import CredentialsSignInForm from './credentials-signin-form'
 import { Button } from '@/components/ui/button'
 import { APP_NAME } from '@/lib/constants'
 
+import { GoogleSignInForm } from './google-signin-form'
+
 export const metadata: Metadata = {
   title: 'Sign In',
 }
@@ -38,6 +40,10 @@ export default async function SignIn(props: {
           <div>
             <CredentialsSignInForm />
           </div>
+          <SeparatorWithOr />
+            <div className='mt-4'>
+              <GoogleSignInForm />
+            </div>
         </CardContent>
       </Card>
       <SeparatorWithOr>New to {APP_NAME}?</SeparatorWithOr>
