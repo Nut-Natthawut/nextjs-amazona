@@ -58,6 +58,7 @@ const orderSchema = new Schema<IOrder>(
   {
     timestamps: true,
   }
+  
 )
 
 const Order =
