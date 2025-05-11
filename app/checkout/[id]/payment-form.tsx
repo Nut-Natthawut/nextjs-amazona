@@ -132,7 +132,7 @@ export default function OrderPaymentForm({
                 </PayPalScriptProvider>
               </div>
             )}
-             {!isPaid && paymentMethod === 'Stripe' && clientSecret && (
+              {!isPaid && paymentMethod === 'Stripe' && clientSecret && (
               <Elements
                 options={{
                   clientSecret,
@@ -145,7 +145,7 @@ export default function OrderPaymentForm({
                 />
               </Elements>
             )}
-
+            
             {!isPaid && paymentMethod === 'Cash On Delivery' && (
               <Button
                 className='w-full rounded-full'
@@ -161,9 +161,10 @@ export default function OrderPaymentForm({
     </Card>
   )
 
-  const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
-)
+    const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string
+  )
+  
   return (
     <main className='max-w-6xl mx-auto'>
       <div className='grid md:grid-cols-4 gap-6'>
