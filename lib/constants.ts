@@ -20,11 +20,11 @@ export const FREE_SHIPPING_MIN_PRICE = Number(
   )
 
   export const AVAILABLE_PAYMENT_METHODS = [
-    // {
-    //     name: 'SCB ',
-    //     commission: 0,
-    //     isDefault: true,
-    // },
+    {
+      name: 'PromptPay',
+      commission: 0,
+      isDefault: true,
+    },
     {
       name: 'PayPal',
       commission: 0,

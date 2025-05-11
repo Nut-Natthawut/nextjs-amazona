@@ -341,6 +341,31 @@ export async function approvePayPalOrder(
   }
 }
 
+export async function updateOrderPaymentStatus(orderId: string) {
+  await connectToDatabase()
+  try {
+    const order = await Order.findById(orderId).populate('user', 'email')
+    if (!order) throw new Error('Order not found')
+
+    order.isPaid = true
+    order.paidAt = new Date()
+    order.paymentResult = {
+      id: `promptpay-${Date.now()}`,
+      status: 'COMPLETED',
+      email_address: typeof order.user === 'object' ? order.user.email : '',
+      pricePaid: order.totalPrice.toString(),
+    }
+    await order.save()
+    await sendPurchaseReceipt({ order })
+    revalidatePath(`/account/orders/${orderId}`)
+    return {
+      success: true,
+      message: 'Your order has been successfully paid via PromptPay',
+    }
+  } catch (err) {
+    return { success: false, message: formatError(err) }
+  }
+}
 
 export const calcDeliveryDateAndPrice = async ({
   items,

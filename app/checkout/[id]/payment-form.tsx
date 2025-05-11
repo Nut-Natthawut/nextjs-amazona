@@ -21,6 +21,7 @@ import ProductPrice from '@/components/shared/product/product-price'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements } from '@stripe/react-stripe-js'
 import StripeForm from './stripe-form'
+import PromptPayForm from './promptpay-form'
 
 
 
@@ -221,8 +222,41 @@ export default function OrderPaymentForm({
 
           <CheckoutFooter />
         </div>
-        <div className='hidden md:block'>
+        <div className='md:col-span-1'>
           <CheckoutSummary />
+          {!isPaid && paymentMethod === 'PromptPay' && (
+            <PromptPayForm orderId={order._id} totalPrice={order.totalPrice} />
+          )}
+          {!isPaid && paymentMethod === 'PayPal' && (
+            <PayPalScriptProvider options={{ clientId: paypalClientId }}>
+              <PrintLoadingState />
+              <PayPalButtons
+                createOrder={handleCreatePayPalOrder}
+                onApprove={handleApprovePayPalOrder}
+              />
+            </PayPalScriptProvider>
+          )}
+          {!isPaid && paymentMethod === 'Stripe' && clientSecret && (
+            <Elements
+              options={{
+                clientSecret,
+              }}
+              stripe={stripePromise}
+            >
+              <StripeForm
+                priceInCents={Math.round(order.totalPrice * 100)}
+                orderId={order._id}
+              />
+            </Elements>
+          )}
+          {!isPaid && paymentMethod === 'Cash On Delivery' && (
+            <Button
+              className='w-full rounded-full'
+              onClick={() => router.push(`/account/orders/${order._id}`)}
+            >
+              View Order
+            </Button>
+          )}
         </div>
       </div>
     </main>
