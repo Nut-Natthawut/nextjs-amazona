@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import ProductPrice from '@/components/shared/product/product-price'
@@ -61,18 +62,29 @@ export default function PromptPayForm({
           amount: totalPrice
         }])
         toast({
-          description: res.message,
+          description: res.message || 'ไม่สามารถยืนยันการชำระเงินได้',
           variant: 'destructive',
         })
       }
-    } catch (error) {
+    } catch (error: any) {
       setPaymentHistory(prev => [...prev, {
         timestamp: new Date(),
         status: 'failed',
         amount: totalPrice
       }])
+      
+      // จัดการ error message ตามประเภทของ error
+      let errorMessage = 'เกิดข้อผิดพลาดในการยืนยันการชำระเงิน'
+      if (error instanceof Error) {
+        errorMessage = error.message
+      } else if (typeof error === 'string') {
+        errorMessage = error
+      } else if (error?.message) {
+        errorMessage = error.message
+      }
+
       toast({
-        description: 'เกิดข้อผิดพลาดในการยืนยันการชำระเงิน',
+        description: errorMessage,
         variant: 'destructive',
       })
     } finally {
@@ -101,6 +113,18 @@ export default function PromptPayForm({
       }, 5000) // Check every 5 seconds
 
       return () => clearTimeout(timer)
+    } else if (paymentStatus === 'checking' && checkCount >= 5) {
+      // ถ้าตรวจสอบครบ 5 ครั้งแล้วยังไม่พบการชำระเงิน
+      setPaymentStatus('pending')
+      setPaymentHistory(prev => [...prev, {
+        timestamp: new Date(),
+        status: 'failed',
+        amount: totalPrice
+      }])
+      toast({
+        description: 'ไม่พบการชำระเงิน กรุณาลองใหม่อีกครั้ง',
+        variant: 'destructive',
+      })
     }
   }, [paymentStatus, checkCount, totalPrice, toast])
 
