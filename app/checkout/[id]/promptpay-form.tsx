@@ -51,6 +51,7 @@ export default function PromptPayForm({
           amount: totalPrice
         }])
         toast({
+          title: 'สำเร็จ',
           description: 'ยืนยันการชำระเงินสำเร็จ',
           variant: 'default',
         })
@@ -62,6 +63,7 @@ export default function PromptPayForm({
           amount: totalPrice
         }])
         toast({
+          title: 'เกิดข้อผิดพลาด',
           description: res.message || 'ไม่สามารถยืนยันการชำระเงินได้',
           variant: 'destructive',
         })
@@ -84,6 +86,7 @@ export default function PromptPayForm({
       }
 
       toast({
+        title: 'เกิดข้อผิดพลาด',
         description: errorMessage,
         variant: 'destructive',
       })
@@ -106,6 +109,7 @@ export default function PromptPayForm({
             amount: totalPrice
           }])
           toast({
+            title: 'สำเร็จ',
             description: 'ตรวจพบการชำระเงินสำเร็จ',
             variant: 'default',
           })
@@ -122,6 +126,7 @@ export default function PromptPayForm({
         amount: totalPrice
       }])
       toast({
+        title: 'ไม่พบการชำระเงิน',
         description: 'ไม่พบการชำระเงิน กรุณาลองใหม่อีกครั้ง',
         variant: 'destructive',
       })
