@@ -31,7 +31,18 @@ export type Data = {
         buttonCaption: string
         isPublished: boolean
     }[]
+    
 }
+//Order
+export type IOrderList = IOrderInput & {
+  _id: string
+  user: {
+    name: string
+    email: string
+  }
+  createdAt: Date
+}
+
 export type IOrderInput = z.infer<typeof OrderInputSchema>
 export type OrderItem = z.infer<typeof OrderItemSchema>
 export type Cart = z.infer<typeof CartSchema>
